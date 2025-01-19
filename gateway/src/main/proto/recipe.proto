@@ -1,0 +1,38 @@
+syntax = "proto3";
+
+package com.example.domain;
+
+option java_multiple_files = false;
+option java_package = "com.example.domain.grpc";
+option java_outer_classname = "RecipeProto";
+
+message Recipe {
+  string id = 1;
+  string name = 2;
+  string ingredients = 3;
+  int32 cookingTime = 4;
+}
+
+message RecipeRequest {
+  string id = 1;
+}
+
+message RecipeResponse {
+  Recipe recipe = 1;
+}
+
+message RecipeListResponse {
+  repeated Recipe recipes = 1;
+}
+
+message Empty {}
+
+service RecipeService {
+  rpc GetRecipe(RecipeRequest) returns (RecipeResponse);
+  rpc ListRecipes(Empty) returns (RecipeListResponse);
+  rpc GetAllRecipes(Empty) returns (RecipeListResponse);
+
+  rpc CreateRecipe(Recipe) returns (Empty);
+  rpc UpdateRecipe(Recipe) returns (Empty);
+  rpc DeleteRecipe(RecipeRequest) returns (Empty);
+}
